@@ -1,0 +1,11 @@
+{
+  "name": "triangle-solver",
+  "version": "1.0.0",
+  "description": "script for solving and drawing triangles based on given side length/angles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
