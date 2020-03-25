@@ -1,6 +1,6 @@
 "use strict"
 
-class Triangle {
+export default class Triangle {
   constructor({a=null,b=null,c=null,A=null,B=null,C=null}){
     this.sides = {
       a: a,
@@ -266,5 +266,3 @@ class Triangle {
     else return this.status
   }
 }
-
-exports.module = Triangle
