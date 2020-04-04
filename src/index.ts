@@ -1,7 +1,29 @@
 "use strict"
 
+interface Sides {
+  [key:string]: number | null
+}
+interface Angles {
+  [key:string]: number | null
+}
+interface Alt {
+  sides:Sides
+  angles:Angles
+}
+interface Constructor {
+  [index: string]: number | null
+}
+
 export default class Triangle {
-  constructor({a=null,b=null,c=null,A=null,B=null,C=null}){
+  sides: Sides
+  angles: Angles
+  area: number | null
+  status: string
+  alt: Alt
+  s: number
+  A: number
+
+  constructor({a=null,b=null,c=null,A=null,B=null,C=null}: Constructor){
     this.sides = {
       a: a,
       b: b,
@@ -14,26 +36,28 @@ export default class Triangle {
     }
     this.area = null
     this.status = 'Three values need to be specified, including at least one side'
+    this.alt = null
   }
   
-  toRad(angle){
-    return angle*(Math.PI/180)}
-  toDeg(angle){
-    return angle*(180/Math.PI)
+  toRad(angle: number){
+    return <number>angle*(Math.PI/180)
+  }
+  toDeg(angle: number){
+    return <number>angle*(180/Math.PI)
   }
   
   algorithmMap = {
       SSS: ()=>{
-        const computeAngle = (a,b,c) => {
+        const computeAngle = (a:number,b:number,c:number) => {
           const result = Math.acos((a**2 + b**2 - c**2)/(2*a*b))
           return this.toDeg(result)
         }
         const a = this.sides.a,
               b = this.sides.b,
               c = this.sides.c
-        const C = computeAngle(a,b,c),
-              A = computeAngle(b,c,a),
-              B = computeAngle(c,a,b);
+        const C = computeAngle(<number>a, <number>b, <number>c),
+              A = computeAngle(<number>a, <number>b, <number>c),
+              B = computeAngle(<number>a, <number>b, <number>c);
         this.angles = {
           A: A,
           B: B,
@@ -43,24 +67,24 @@ export default class Triangle {
       SAS: ()=>{
         //remove null values, store index
         const side = Object.values(this.sides).filter((x)=>!!x)        
-        const angle = Object.entries(this.angles).filter(x=>!!x[1]).flat()
+        let angle:any = Object.entries(this.angles).filter(x=>!!x[1]).flat()
         
         //law of cosines to get missing side
-        const missingSide = Math.sqrt(side[0]**2 + side[1]**2 - 2*side[0]*side[1]*Math.cos(this.toRad(angle[1])))
+        const missingSide = Math.sqrt(side[0]**2 + side[1]**2 - 2*side[0]*side[1]*Math.cos(this.toRad(<any>angle[1])))
         this.sides[angle[0].toLowerCase()] = missingSide
         
-        this.algorithmMap['SSS'](this.sides)
+        this.algorithmMap['SSS']()
       },
       AAS: ()=>{
         //find missing angle
         const missingAngle = Object.entries(this.angles).reduce((a, b)=>a-b[1], 180)
-        const side = Object.entries(this.sides).filter((x)=>!!x[1]).flat()
+        const side:any = Object.entries(this.sides).filter((x)=>!!x[1]).flat()
         
         Object.entries(this.sides).forEach(entry=> {
           const key = entry[0].toUpperCase()
           if(!this.angles[key]) this.angles[key] = missingAngle
           if(!entry[1]){
-            this.sides[entry[0]] = (Math.sin(this.toRad(this.angles[entry[0].toUpperCase()]))*side[1])/Math.sin(this.toRad(this.angles[side[0].toUpperCase()]))
+            this.sides[entry[0]] = (Math.sin(this.toRad(this.angles[entry[0].toUpperCase()]))*<any>side[1])/Math.sin(this.toRad(this.angles[side[0].toUpperCase()]))
           } 
         })
       },
@@ -92,8 +116,8 @@ export default class Triangle {
         else if(D<1) {
           this.status="Two solutions possible"
           
-          const X = this.toDeg*Math.asin(D),
-                Xalt = 180-this.toDeg*Math.asin(D)
+          const X = <any>this.toDeg*Math.asin(D),
+                Xalt = 180-<any>this.toDeg*Math.asin(D)
           
           this.alt = {
             sides: this.sides,
@@ -147,15 +171,16 @@ export default class Triangle {
           const key = entry[0].toUpperCase()
           if(!this.angles[key]) this.angles[key] = missingAngle
           if(!entry[1]){
-            this.sides[entry[0]] = (Math.sin(this.toRad(this.angles[key]))*side[1])/Math.sin(this.toRad(this.angles[key]))
+            this.sides[entry[0]] = (Math.sin(this.toRad(this.angles[key]))*<any>side[1])/Math.sin(this.toRad(this.angles[key]))
           } 
         })        
       },
   }
 
   validateInput(){
-    const sides = !!this.sides.a + !!this.sides.b + !!this.sides.c
-    const angles = !!this.angles.A + !!this.angles.B + !!this.angles.C
+    //bool to int conversion
+    const sides: number = (+!!this.sides.a) + (+!!this.sides.b) + (+!!this.sides.c)
+    const angles: number = (+!!this.angles.A) + (+!!this.angles.B) + (+!!this.angles.C)
     
     this.s = sides
     this.A = angles
@@ -245,13 +270,13 @@ export default class Triangle {
       //validateResult
       this.validateResults()
       
-      if(this.status==='Solved') {
+      if(<any>this.status === 'Solved') {
         console.log('solved')
         return {
           angles: this.angles,
           sides: this.sides
         }
-      } else if(this.status === 'Two solutions possible') {
+      } else if(<any>this.status === 'Two solutions possible') {
         console.log('solved two')
         return [{
           angles: this.angles,

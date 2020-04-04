@@ -2,19 +2,18 @@
   "name": "triangle-solver",
   "version": "1.0.0",
   "description": "script for solving and drawing triangles based on given side length/angles",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "files": ["f=lib/**/*"],
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "start:run": "nodemon build/Triangle.ts",
-    "start:build": "tsc -w",
-    "start": "concurrently npm:start"
+    "run": "nodemon lib/index.js",
+    "build": "tsc -w"
   },
   "author": "Jacek Walasik",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^25.1.4",
-    "concurrently": "^5.1.0",
     "jest": "^25.1.0",
     "nodemon": "^2.0.2",
     "tslint": "^6.1.0",
