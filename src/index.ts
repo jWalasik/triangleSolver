@@ -193,7 +193,6 @@ export default class Triangle {
   validateResults(){
     const valid = Math.abs(this.angles.A+this.angles.B+this.angles.C - 180) < 0.1,
           altValid = this.alt ? Math.abs(this.alt.angles.A+this.alt.angles.B+this.alt.angles.C - 180) < 0.1 : null
-    console.log(valid, altValid)
     if(valid && altValid) {
       this.status = 'Two solutions possible'
     }
@@ -205,7 +204,6 @@ export default class Triangle {
       this.sides = this.alt.sides
     }
     else {
-      console.log(this.angles, this.sides)
       this.status = 'Provided values doesnt make up a triangle'
     }
   }
@@ -237,8 +235,20 @@ export default class Triangle {
     }
   }
   
-  update(){
-    
+  update({a=null,b=null,c=null,A=null,B=null,C=null}){
+    this.sides = {
+      a: a,
+      b: b,
+      c: c
+    }
+    this.angles = {
+      A: A,
+      B: B,
+      C: C
+    }
+    this.area = null
+    this.status = 'Three values need to be specified, including at least one side'
+    this.alt = null
   }
   draw (height=100){
     const factor = Object.values(this.sides).sort((a,b)=>b-a)[0]/(height*0.9)
@@ -270,13 +280,13 @@ export default class Triangle {
       //validateResult
       this.validateResults()
       
-      if(<any>this.status === 'Solved') {
+      if(<string>this.status === 'Solved') {
         console.log('solved')
         return {
           angles: this.angles,
           sides: this.sides
         }
-      } else if(<any>this.status === 'Two solutions possible') {
+      } else if(<string>this.status === 'Two solutions possible') {
         console.log('solved two')
         return [{
           angles: this.angles,
