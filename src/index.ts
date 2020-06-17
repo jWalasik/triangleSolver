@@ -235,7 +235,7 @@ export default class Triangle {
     }
   }
   
-  update({a=null,b=null,c=null,A=null,B=null,C=null}){
+  update({a=null,b=null,c=null,A=null,B=null,C=null}: Constructor){
     this.sides = {
       a: a,
       b: b,
@@ -250,24 +250,29 @@ export default class Triangle {
     this.status = 'Three values need to be specified, including at least one side'
     this.alt = null
   }
-  draw (height=100){
-    const factor = Object.values(this.sides).sort((a,b)=>b-a)[0]/(height*0.9)
+  draw (canvas: any){
+    const ctx = canvas.getContext('2d')
+    const height = canvas.height
+    const factor = height / this.sides[Object.keys(this.sides).sort((a,b)=>this.sides[b]-this.sides[a])[0]]
 
-    const A = [0,height]
-    //A to C
-    const C = [this.sides.b/factor, A[1]]    
-    
-    //C to B        
+    var Ax=0, Ay=height;
+    var Cx = this.sides.b*factor, Cy = Ay      
+
     const primC = 90 - this.angles.C
     const primB = 180 - 90 - primC
     
     const ratio = this.sides.a / Math.sin(this.toRad(90))
-    const h = Math.sin(this.toRad(primB)) * ratio / factor
-    const x = Math.sin(this.toRad(primC)) * ratio / factor
-
-    const B = [C[0]-x, C[1]-h]
+    const h = Math.sin(this.toRad(primB)) * ratio * factor
+    const x = Math.sin(this.toRad(primC)) * ratio * factor
+    var Bx=Cx-x, By=Cy-h
     
-    return [...A,...C,...B].join(' ')
+    ctx.beginPath();
+    ctx.moveTo(Ax, Ay);
+    ctx.lineTo(Cx, Cy);
+    ctx.lineTo(Bx, By);
+    ctx.closePath();
+    ctx.fillStyle="white"; ctx.lineWidth=2;
+    ctx.stroke()
   }
   solve(){
     this.validateInput()

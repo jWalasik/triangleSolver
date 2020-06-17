@@ -1,6 +1,6 @@
 {
   "name": "triangle-solver",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "script for solving and drawing triangles based on given side length/angles",
   "main": "lib/index.js",
   "files": ["f=lib/**/*"],

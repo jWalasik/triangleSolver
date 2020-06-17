@@ -33,8 +33,8 @@ export default class Triangle {
     validateInput(): void;
     validateResults(): void;
     pickAlgorithm(): "SSS" | "AAS" | "ASA" | "SsA" | "sSA" | "SAS";
-    update(): void;
-    draw(height?: number): string;
+    update({ a, b, c, A, B, C }: Constructor): void;
+    draw(canvas: any): void;
     solve(): string | {
         angles: Angles;
         sides: Sides;
