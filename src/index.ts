@@ -273,6 +273,17 @@ export default class Triangle {
     ctx.closePath();
     ctx.fillStyle="white"; ctx.lineWidth=2;
     ctx.stroke()
+
+    //angles
+    ctx.font = "16px Arial black"
+    ctx.fillStyle="black"
+    ctx.fillText(`A:${this.angles.A}`, Ax+20, Ay-10)
+    ctx.fillText(`B:${this.angles.B}`, Bx-20, By+40)
+    ctx.fillText(`C:${this.angles.C}`, Cx-60, Cy-10)
+    //sides
+    ctx.fillText(`a:${this.sides.a}`, height/6, height/2+10)
+    ctx.fillText(`b:${this.sides.b}`, canvas.width/2, Ay-10)
+    ctx.fillText(`c:${this.sides.c}`, height*0.8, height/2+10)
   }
   solve(){
     this.validateInput()
