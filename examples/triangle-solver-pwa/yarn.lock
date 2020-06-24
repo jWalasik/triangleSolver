@@ -10040,10 +10040,10 @@ tr46@^1.0.1:
   dependencies:
     punycode "^2.1.0"
 
-triangle-solver@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/triangle-solver/-/triangle-solver-1.0.2.tgz#fd2ff647c2023c2fca43f22d8cf65a3016fa344d"
-  integrity sha512-ZzHvDDcvGa4qEfmI3r8D+M3fHXCuD+e2vqwnSyWgNra18Zfsg0wuJ9LrbvfEBicx9lw5Qn+l29oGptDzyuMJVw==
+triangle-solver@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/triangle-solver/-/triangle-solver-1.0.3.tgz#394433d0d81637f750a14c5d3bbc3bb4524e96f0"
+  integrity sha512-dyGaCH08tA5Qri9nVQ/cmTosa+lBKC08Gv0f9lEp5HfujVBiJF1Y3aeo7z9e8ABVUsvzYz1DVZIcket/yc99bA==
 
 ts-pnp@1.1.6, ts-pnp@^1.1.6:
   version "1.1.6"

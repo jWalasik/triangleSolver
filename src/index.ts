@@ -56,8 +56,8 @@ export default class Triangle {
               b = this.sides.b,
               c = this.sides.c
         const C = computeAngle(<number>a, <number>b, <number>c),
-              A = computeAngle(<number>a, <number>b, <number>c),
-              B = computeAngle(<number>a, <number>b, <number>c);
+              A = computeAngle(<number>c, <number>b, <number>a),
+              B = computeAngle(<number>a, <number>c, <number>b);
         this.angles = {
           A: A,
           B: B,
@@ -207,6 +207,15 @@ export default class Triangle {
       this.status = 'Provided values doesnt make up a triangle'
     }
   }
+
+  roundResults() {
+    Object.keys(this.sides).forEach(key => {
+      this.sides[key] = Math.round((this.sides[key] + Number.EPSILON) * 100) / 100
+    })
+    Object.keys(this.angles).forEach(key => {
+      this.angles[key] = Math.round((this.angles[key] + Number.EPSILON) * 100) / 100
+    })
+  }
   
   pickAlgorithm(){    
     if(this.s === 3) return 'SSS'
@@ -295,7 +304,7 @@ export default class Triangle {
       
       //validateResult
       this.validateResults()
-      
+      this.roundResults()
       if(<string>this.status === 'Solved') {
         console.log('solved')
         return {
