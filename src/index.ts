@@ -13,15 +13,17 @@ interface Alt {
 interface Constructor {
   [index: string]: number | null
 }
+interface Validator {
+  [index: string]: number
+}
 
 export default class Triangle {
   sides: Sides
   angles: Angles
+  validator: Validator
   area: number | null
   status: string
   alt: Alt
-  s: number
-  A: number
 
   constructor({a=null,b=null,c=null,A=null,B=null,C=null}: Constructor){
     this.sides = {
@@ -33,6 +35,10 @@ export default class Triangle {
       A: A,
       B: B,
       C: C
+    }
+    this.validator = {
+      sides: (+!!a) + (+!!b) + (+!!c),
+      angles: (+!!A) + (+!!B) + (+!!C)
     }
     this.area = null
     this.status = 'Three values need to be specified, including at least one side'
@@ -178,15 +184,8 @@ export default class Triangle {
   }
 
   validateInput(){
-    //bool to int conversion
-    const sides: number = (+!!this.sides.a) + (+!!this.sides.b) + (+!!this.sides.c)
-    const angles: number = (+!!this.angles.A) + (+!!this.angles.B) + (+!!this.angles.C)
-    
-    this.s = sides
-    this.A = angles
-    
-    if(sides===0) this.status = 'You need to provide at least one side'
-    if(sides+angles !==3) this.status = 'You need to provide exactly three values'
+    if(this.validator.sides === 0) this.status = 'You need to provide at least one side'
+    else if(this.validator.sides + this.validator.angles !== 3) this.status = 'You need to provide exactly three values'
     else this.status = 'Valid input'
   }
   
@@ -218,8 +217,8 @@ export default class Triangle {
   }
   
   pickAlgorithm(){    
-    if(this.s === 3) return 'SSS'
-    if(this.A === 2) {
+    if(this.validator.sides === 3) return 'SSS'
+    if(this.validator.angles === 2) {
       //pick AAS or ASA
       for(const key in this.sides){
         //check if side has opposite angle
@@ -229,7 +228,7 @@ export default class Triangle {
       }
       return 'ASA'
     }
-    if(this.s === 2) {
+    if(this.validator.sides === 2) {
       //pick SAS, sSA or SsA, uppercase side longer side
       for(const key in this.angles){
         if(this.angles[key] && this.sides[key.toLowerCase()]) {

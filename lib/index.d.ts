@@ -32,6 +32,7 @@ export default class Triangle {
     };
     validateInput(): void;
     validateResults(): void;
+    roundResults(): void;
     pickAlgorithm(): "SSS" | "AAS" | "ASA" | "SsA" | "sSA" | "SAS";
     update({ a, b, c, A, B, C }: Constructor): void;
     draw(canvas: any): void;

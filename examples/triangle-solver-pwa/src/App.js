@@ -32,7 +32,7 @@ const App = () => {
   const solveTriangle = () => {
     triangle.update(values)
     triangle.solve()
-    console.log(triangle)
+    setValues({values}) //triggers rerender, bad hack, dont do this
   }
 
   return (
