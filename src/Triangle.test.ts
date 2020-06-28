@@ -1,11 +1,11 @@
 import Triangle from './index'
 //triangle types
-const acute = {a:3.255,b:3,c:2.654,A:70,B:50,C:60},
+const acute = {a:3.26,b:2.65,c:3,A:70,B:50,C:60},
       equilateral = {a:3,b:3,c:3,A:60,B:60,C:60},
-      right = {a:3,b:4,c:5,A:36.9,B:53.1,C:90},
+      right = {a:3,b:4,c:5,A:36.87,B:53.13,C:90},
       obtuse = {a:4.67,b:6,c:8.77,A:30,B:40,C:110},
-      isoceles = {a:12.92,b:10.64,c:12.92,A:65.7,B:48.6,C:65.7},
-      scalene = {a:3.66,b:5,c:4.48,A:45,B:60,C:75}
+      isoceles = {a:12.92,b:10.64,c:12.92,A:65.66,B:48.64,C:65.7},
+      scalene = {a:3.66,b:5,c:4.48,A:45,B:75,C:60}
 
 describe('Should initialize properly', ()=>{
   it('have methods', ()=>{
@@ -125,12 +125,12 @@ describe('Should solve triangles properly', ()=>{
   const compare = (triangle: Triangle, type: string, alt?: boolean) => {
     const expected = eval(type)
 
-    expect(alt ? triangle.alt.sides.a : triangle.sides.a).toBeCloseTo(expected.a, 0.1)
-    expect(alt ? triangle.alt.sides.b : triangle.sides.b).toBeCloseTo(expected.b, 0.1)
-    expect(alt ? triangle.alt.sides.c : triangle.sides.c).toBeCloseTo(expected.c, 0.1)
-    expect(alt ? triangle.alt.angles.A : triangle.angles.A).toBeCloseTo(expected.A, 0.1)
-    expect(alt ? triangle.alt.angles.B : triangle.angles.B).toBeCloseTo(expected.B, 0.1)
-    expect(alt ? triangle.alt.angles.C : triangle.angles.C).toBeCloseTo(expected.C, 0.1)
+    expect(alt ? triangle.alt.sides.a : triangle.sides.a).toBeCloseTo(expected.a, 0)
+    expect(alt ? triangle.alt.sides.b : triangle.sides.b).toBeCloseTo(expected.b, 0)
+    expect(alt ? triangle.alt.sides.c : triangle.sides.c).toBeCloseTo(expected.c, 0)
+    expect(alt ? triangle.alt.angles.A : triangle.angles.A).toBeCloseTo(expected.A, 0)
+    expect(alt ? triangle.alt.angles.B : triangle.angles.B).toBeCloseTo(expected.B, 0)
+    expect(alt ? triangle.alt.angles.C : triangle.angles.C).toBeCloseTo(expected.C, 0)
   }
   describe('Equilateral triangles:', ()=>{
     it('SSS case', ()=>{
@@ -202,189 +202,173 @@ describe('Should solve triangles properly', ()=>{
     })
   })
 
-//   describe('Acute triangles:', ()=>{
-//     it('SSS case', ()=>{
-//       const triangle = new Triangle({a:acute.a, b:acute.b, c:acute.c})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:acute.a, b:acute.b, c:acute.c})
-//       expect(triangle.angles).toEqual({A:acute.A, B:acute.B, C:acute.C})
-//     })
-//     it('SAS case', ()=>{
-//       const triangle = new Triangle({A:acute.A, b:acute.b, c:acute.c})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:acute.a, b:acute.b, c:acute.c})
-//       expect(triangle.angles).toEqual({A:acute.A, B:acute.B, C:acute.C})
-//     })
-//     it('AAS case', ()=>{
-//       const triangle = new Triangle({A:acute.A, b:acute.b, B:acute.B})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:acute.a, b:acute.b, c:acute.c})
-//       expect(triangle.angles).toEqual({A:acute.A, B:acute.B, C:acute.C})
-//     })
-//     it('sSA case', ()=>{
-//       const triangle = new Triangle({b:acute.b, c:acute.c, C:acute.C})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:acute.a, b:acute.b, c:acute.c})
-//       expect(triangle.angles).toEqual({A:acute.A, B:acute.B, C:acute.C})
-//     })
-//     it('SsA case', ()=>{
-//       const triangle = new Triangle({b:acute.b, c:acute.c, B:acute.B})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:acute.a, b:acute.b, c:acute.c})
-//       expect(triangle.angles).toEqual({A:acute.A, B:acute.B, C:acute.C})
-//     })
-//     it('ASA case', ()=>{
-//       const triangle = new Triangle({A:acute.A, b:acute.b, C:acute.C})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:acute.a, b:acute.b, c:acute.c})
-//       expect(triangle.angles).toEqual({A:acute.A, B:acute.B, C:acute.C})
-//     })
-//   })
+  describe('Acute triangles:', ()=>{
+    it('SSS case', ()=>{
+      const triangle = new Triangle({a:acute.a, b:acute.b, c:acute.c})
+      triangle.solve()
+      return compare(triangle, 'acute')
+    })
+    it('SAS case', ()=>{
+      const triangle = new Triangle({A:acute.A, b:acute.b, c:acute.c})
+      triangle.solve()
+      return compare(triangle, 'acute')
+    })
+    it('AAS case', ()=>{
+      const triangle = new Triangle({A:acute.A, b:acute.b, B:acute.B})
+      triangle.solve()
+      return compare(triangle, 'acute')
+    })
+    it('sSA case', ()=>{
+      const triangle = new Triangle({b:acute.b, c:acute.c, C:acute.C})
+      triangle.solve()
+      if((triangle.validator.sides + triangle.validator.angles !== 6) && triangle.alt){
+        return compare(triangle, 'acute', true)
+      }
+      return compare(triangle, 'acute')
+    })
+    it('SsA case', ()=>{
+      const triangle = new Triangle({b:acute.b, c:acute.c, B:acute.B})
+      triangle.solve()
+      return compare(triangle, 'acute')
+    })
+    it('ASA case', ()=>{
+      const triangle = new Triangle({A:acute.A, b:acute.b, C:acute.C})
+      triangle.solve()
+      return compare(triangle, 'acute')
+    })
+  })
 
-//   describe('Isoceles triangles:', ()=>{
-//     it('SSS case', ()=>{
-//       const triangle = new Triangle({a:isoceles.a, b:isoceles.b, c:isoceles.c})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:isoceles.a, b:isoceles.b, c:isoceles.c})
-//       expect(triangle.angles).toEqual({A:isoceles.A, B:isoceles.B, C:isoceles.C})
-//     })
-//     it('SAS case', ()=>{
-//       const triangle = new Triangle({A:isoceles.A, b:isoceles.b, c:isoceles.c})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:isoceles.a, b:isoceles.b, c:isoceles.c})
-//       expect(triangle.angles).toEqual({A:isoceles.A, B:isoceles.B, C:isoceles.C})
-//     })
-//     it('AAS case', ()=>{
-//       const triangle = new Triangle({A:isoceles.A, b:isoceles.b, B:isoceles.B})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:isoceles.a, b:isoceles.b, c:isoceles.c})
-//       expect(triangle.angles).toEqual({A:isoceles.A, B:isoceles.B, C:isoceles.C})
-//     })
-//     it('sSA case', ()=>{
-//       const triangle = new Triangle({b:isoceles.b, c:isoceles.c, C:isoceles.C})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:isoceles.a, b:isoceles.b, c:isoceles.c})
-//       expect(triangle.angles).toEqual({A:isoceles.A, B:isoceles.B, C:isoceles.C})
-//     })
-//     it('SsA case', ()=>{
-//       const triangle = new Triangle({b:isoceles.b, c:isoceles.c, B:isoceles.B})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:isoceles.a, b:isoceles.b, c:isoceles.c})
-//       expect(triangle.angles).toEqual({A:isoceles.A, B:isoceles.B, C:isoceles.C})
-//     })
-//     it('ASA case', ()=>{
-//       const triangle = new Triangle({A:isoceles.A, b:isoceles.b, C:isoceles.C})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:isoceles.a, b:isoceles.b, c:isoceles.c})
-//       expect(triangle.angles).toEqual({A:isoceles.A, B:isoceles.B, C:isoceles.C})
-//     })
-//   })
+  describe('Isoceles triangles:', ()=>{
+    it('SSS case', ()=>{
+      const triangle = new Triangle({a:isoceles.a, b:isoceles.b, c:isoceles.c})
+      triangle.solve()
+      return compare(triangle, 'isoceles')
+    })
+    it('SAS case', ()=>{
+      const triangle = new Triangle({A:isoceles.A, b:isoceles.b, c:isoceles.c})
+      triangle.solve()
+      return compare(triangle, 'isoceles')
+    })
+    it('AAS case', ()=>{
+      const triangle = new Triangle({A:isoceles.A, b:isoceles.b, B:isoceles.B})
+      triangle.solve()
+      return compare(triangle, 'isoceles')
+    })
+    it('sSA case', ()=>{
+      const triangle = new Triangle({b:isoceles.b, c:isoceles.c, C:isoceles.C})
+      triangle.solve()
+      if((triangle.validator.sides + triangle.validator.angles !== 6) && triangle.alt){
+        return compare(triangle, 'isoceles', true)
+      }
+      return compare(triangle, 'isoceles')
+    })
+    it('SsA case', ()=>{
+      const triangle = new Triangle({b:isoceles.b, c:isoceles.c, B:isoceles.B})
+      triangle.solve()
+      return compare(triangle, 'isoceles')
+    })
+    it('ASA case', ()=>{
+      const triangle = new Triangle({A:isoceles.A, b:isoceles.b, C:isoceles.C})
+      triangle.solve()
+      return compare(triangle, 'isoceles')
+    })
+  })
 
-//   describe('Right triangles:', ()=>{
-//     it('SSS case', ()=>{
-//       const triangle = new Triangle({a:right.a, b:right.b, c:right.c})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:right.a, b:right.b, c:right.c})
-//       expect(triangle.angles).toEqual({A:right.A, B:right.B, C:right.C})
-//     })
-//     it('SAS case', ()=>{
-//       const triangle = new Triangle({A:right.A, b:right.b, c:right.c})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:right.a, b:right.b, c:right.c})
-//       expect(triangle.angles).toEqual({A:right.A, B:right.B, C:right.C})
-//     })
-//     it('AAS case', ()=>{
-//       const triangle = new Triangle({A:right.A, b:right.b, B:right.B})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:right.a, b:right.b, c:right.c})
-//       expect(triangle.angles).toEqual({A:right.A, B:right.B, C:right.C})
-//     })
-//     it('sSA case', ()=>{
-//       const triangle = new Triangle({b:right.b, c:right.c, C:right.C})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:right.a, b:right.b, c:right.c})
-//       expect(triangle.angles).toEqual({A:right.A, B:right.B, C:right.C})
-//     })
-//     it('SsA case', ()=>{
-//       const triangle = new Triangle({b:right.b, c:right.c, B:right.B})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:right.a, b:right.b, c:right.c})
-//       expect(triangle.angles).toEqual({A:right.A, B:right.B, C:right.C})
-//     })
-//     it('ASA case', ()=>{
-//       const triangle = new Triangle({A:right.A, b:right.b, C:right.C})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:right.a, b:right.b, c:right.c})
-//       expect(triangle.angles).toEqual({A:right.A, B:right.B, C:right.C})
-//     })
-//   })
+  describe('Right triangles:', ()=>{
+    it('SSS case', ()=>{
+      const triangle = new Triangle({a:right.a, b:right.b, c:right.c})
+      triangle.solve()
+      return compare(triangle, 'right')
+    })
+    it('SAS case', ()=>{
+      const triangle = new Triangle({A:right.A, b:right.b, c:right.c})
+      triangle.solve()
+      return compare(triangle, 'right')
+    })
+    it('AAS case', ()=>{
+      const triangle = new Triangle({A:right.A, b:right.b, B:right.B})
+      triangle.solve()
+      return compare(triangle, 'right')
+    })
+    it('sSA case', ()=>{
+      const triangle = new Triangle({b:right.b, c:right.c, C:right.C})
+      triangle.solve()
+      if((triangle.validator.sides + triangle.validator.angles !== 6) && triangle.alt){
+        return compare(triangle, 'right', true)
+      }
+      return compare(triangle, 'right')
+    })
+    it('SsA case', ()=>{
+      const triangle = new Triangle({b:right.b, c:right.c, B:right.B})
+      triangle.solve()
+      return compare(triangle, 'right')
+    })
+    it('ASA case', ()=>{
+      const triangle = new Triangle({A:right.A, b:right.b, C:right.C})
+      triangle.solve()
+      return compare(triangle, 'right')
+    })
+  })
 
-//   describe('Scalene triangles:', ()=>{
-//     it('SSS case', ()=>{
-//       const triangle = new Triangle({a:scalene.a, b:scalene.b, c:scalene.c})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:scalene.a, b:scalene.b, c:scalene.c})
-//       expect(triangle.angles).toEqual({A:scalene.A, B:scalene.B, C:scalene.C})
-//     })
-//     it('SAS case', ()=>{
-//       const triangle = new Triangle({A:scalene.A, b:scalene.b, c:scalene.c})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:scalene.a, b:scalene.b, c:scalene.c})
-//       expect(triangle.angles).toEqual({A:scalene.A, B:scalene.B, C:scalene.C})
-//     })
-//     it('AAS case', ()=>{
-//       const triangle = new Triangle({A:scalene.A, b:scalene.b, B:scalene.B})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:scalene.a, b:scalene.b, c:scalene.c})
-//       expect(triangle.angles).toEqual({A:scalene.A, B:scalene.B, C:scalene.C})
-//     })
-//     it('sSA case', ()=>{
-//       const triangle = new Triangle({b:scalene.b, c:scalene.c, C:scalene.C})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:scalene.a, b:scalene.b, c:scalene.c})
-//       expect(triangle.angles).toEqual({A:scalene.A, B:scalene.B, C:scalene.C})
-//     })
-//     it('SsA case', ()=>{
-//       const triangle = new Triangle({b:scalene.b, c:scalene.c, B:scalene.B})
-//       triangle.solve()
-//       //this case is expected to yield two triangles
-//       expect(triangle.sides).toEqual({a:scalene.a, b:scalene.b, c:scalene.c})
-//       expect(triangle.angles).toEqual({A:scalene.A, B:scalene.B, C:scalene.C})
-//     })
-//     it('ASA case', ()=>{
-//       const triangle = new Triangle({A:scalene.A, b:scalene.b, C:scalene.C})
-//       triangle.solve()
-//       expect(triangle.sides).toEqual({a:scalene.a, b:scalene.b, c:scalene.c})
-//       expect(triangle.angles).toEqual({A:scalene.A, B:scalene.B, C:scalene.C})
-//     })
-//   })
-// })
+  describe('Scalene triangles:', ()=>{
+    it('SSS case', ()=>{
+      const triangle = new Triangle({a:scalene.a, b:scalene.b, c:scalene.c})
+      triangle.solve()
+      return compare(triangle, 'scalene')
+    })
+    it('SAS case', ()=>{
+      const triangle = new Triangle({A:scalene.A, b:scalene.b, c:scalene.c})
+      triangle.solve()
+      return compare(triangle, 'scalene')
+    })
+    it('AAS case', ()=>{
+      const triangle = new Triangle({A:scalene.A, b:scalene.b, B:scalene.B})
+      triangle.solve()
+      return compare(triangle, 'scalene')
+    })
+    it('sSA case', ()=>{
+      const triangle = new Triangle({b:scalene.b, c:scalene.c, C:scalene.C})
+      triangle.solve()
+      return compare(triangle, 'scalene')
+    })
+    it('SsA case', ()=>{
+      const triangle = new Triangle({b:scalene.b, c:scalene.c, B:scalene.B})
+      triangle.solve()
+      return compare(triangle, 'scalene')
+    })
+    it('ASA case', ()=>{
+      const triangle = new Triangle({A:scalene.A, b:scalene.b, C:scalene.C})
+      triangle.solve()
+      return compare(triangle, 'scalene')
+    })
+  })
+})
 
-// describe('Should pick correct algorithm', ()=>{
-//   it('SSS case', ()=>{
-//     const triangle = new Triangle({a:3, b:3, c:3})
-//     expect(triangle.pickAlgorithm()).toEqual('SSS')
-//   })
-//   it('SAS case', ()=>{
-//     const triangle = new Triangle({a:3, b:3, c:3})
-//     expect(triangle.pickAlgorithm()).toEqual('SSS')
-//   })
-//   it('AAS case', ()=>{
-//     const triangle = new Triangle({a:3, b:3, c:3})
-//     expect(triangle.pickAlgorithm()).toEqual('SSS')
-//   })
-//   it('sSA case', ()=>{
-//     const triangle = new Triangle({a:3, b:3, c:3})
-//     expect(triangle.pickAlgorithm()).toEqual('SSS')
-//   })
-//   it('SsA case', ()=>{
-//     const triangle = new Triangle({a:3, b:3, c:3})
-//     expect(triangle.pickAlgorithm()).toEqual('SSS')
-//   })
-//   it('ASA case', ()=>{
-//     const triangle = new Triangle({a:3, b:3, c:3})
-//     expect(triangle.pickAlgorithm()).toEqual('SSS')
-//   })
+describe('Should pick correct algorithm', ()=>{
+  it('SSS case', ()=>{
+    const triangle = new Triangle({a:3, b:3, c:3})
+    expect(triangle.pickAlgorithm()).toEqual('SSS')
+  })
+  it('SAS case', ()=>{
+    const triangle = new Triangle({a:3, b:3, c:3})
+    expect(triangle.pickAlgorithm()).toEqual('SSS')
+  })
+  it('AAS case', ()=>{
+    const triangle = new Triangle({a:3, b:3, c:3})
+    expect(triangle.pickAlgorithm()).toEqual('SSS')
+  })
+  it('sSA case', ()=>{
+    const triangle = new Triangle({a:3, b:3, c:3})
+    expect(triangle.pickAlgorithm()).toEqual('SSS')
+  })
+  it('SsA case', ()=>{
+    const triangle = new Triangle({a:3, b:3, c:3})
+    expect(triangle.pickAlgorithm()).toEqual('SSS')
+  })
+  it('ASA case', ()=>{
+    const triangle = new Triangle({a:3, b:3, c:3})
+    expect(triangle.pickAlgorithm()).toEqual('SSS')
+  })
 })
 
 describe('Should draw triangles', ()=>{
