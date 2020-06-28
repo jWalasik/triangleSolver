@@ -106,7 +106,6 @@ export default class Triangle {
           this.status = 'Invalid input, sides do not connect'
         }
         else if(D===1 || sides[0][1]===sides[1][1]){
-          console.log('single solution')
           this.angles[sides[0][0].toUpperCase()] = this.toDeg(Math.asin(D)) //opposite to long side
           //find last angle
           this.angles[sides[2][0].toUpperCase()] = Object.entries(this.angles).reduce((a, b)=>a-b[1], 180)
@@ -121,14 +120,12 @@ export default class Triangle {
         }
         else if(D<1) {
           this.status="Two solutions possible"
-          
-          const X = <any>this.toDeg*Math.asin(D),
-                Xalt = 180-<any>this.toDeg*Math.asin(D)
-          
-          this.alt = {
-            sides: this.sides,
-            angles: this.angles
-          }
+          const degD = this.toDeg(Math.asin(D))
+          const X = degD,
+                Xalt = 180-degD
+
+          this.alt = JSON.parse(JSON.stringify({sides: this.sides, angles: this.angles}))
+
           //main
           this.angles[sides[0][0].toUpperCase()] = X
           this.angles[sides[2][0].toUpperCase()] = Object.entries(this.angles).reduce((a, b)=>a-b[1], 180)
@@ -138,11 +135,10 @@ export default class Triangle {
                 Math.sin(this.toRad(this.angles[sides[2][0].toUpperCase()])) 
                 / 
                 Math.sin(this.toRad(angle[0][1]))
-          
+
           //alt
           this.alt.angles[sides[0][0].toUpperCase()] = Xalt
           this.alt.angles[sides[2][0].toUpperCase()] = Object.entries(this.alt.angles).reduce((a, b)=>a-b[1], 180)
-          
           this.alt.sides[sides[2][0]] = 
                 this.alt.sides[angle[0][0].toLowerCase()] 
                 * 
@@ -305,13 +301,11 @@ export default class Triangle {
       this.validateResults()
       this.roundResults()
       if(<string>this.status === 'Solved') {
-        console.log('solved')
         return {
           angles: this.angles,
           sides: this.sides
         }
       } else if(<string>this.status === 'Two solutions possible') {
-        console.log('solved two')
         return [{
           angles: this.angles,
           sides: this.sides
