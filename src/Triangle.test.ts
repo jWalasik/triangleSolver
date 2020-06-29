@@ -162,6 +162,7 @@ describe('Should solve triangles properly', ()=>{
       const triangle = new Triangle({A:equilateral.A, b:equilateral.b, C:equilateral.C})
       triangle.solve()
       return compare(triangle, 'equilateral')
+      
     })
   })
 

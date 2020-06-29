@@ -167,13 +167,16 @@ export default class Triangle {
       ASA: ()=>{
         const missingAngle = Object.entries(this.angles).reduce((a, b)=>a-b[1], 180)
         
-        const side = Object.entries(this.sides).filter((x)=>!!x[1]).flat()
+        //known side and its key
+        let [fixKey,fixSide] = Object.entries(this.sides).filter((x)=>!!x[1]).flat()
+        fixKey = fixKey.toString().toUpperCase()
+        this.angles[fixKey] = missingAngle
         
         Object.entries(this.sides).forEach(entry=> {
           const key = entry[0].toUpperCase()
           if(!this.angles[key]) this.angles[key] = missingAngle
           if(!entry[1]){
-            this.sides[entry[0]] = (Math.sin(this.toRad(this.angles[key]))*<any>side[1])/Math.sin(this.toRad(this.angles[key]))
+            this.sides[entry[0]] = (Math.sin(this.toRad(this.angles[key]))*<number>fixSide)/Math.sin(this.toRad(this.angles[fixKey]))
           } 
         })        
       },
