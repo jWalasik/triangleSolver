@@ -243,7 +243,6 @@ export default class Triangle {
   }
   
   update([idx, value]: [string, number]){
-
     if (idx.toUpperCase() === idx) {
       this.angles[idx] = value;
     } else {

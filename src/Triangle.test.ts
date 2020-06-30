@@ -85,40 +85,26 @@ describe('Should validate inputs: ', ()=> {
 })
 
 describe('Should properly update values', ()=>{
-  it('whole object', ()=>{
+  it('change side value', ()=>{
     const triangle = new Triangle({a:6, b:6, c:6, A:60,B:60, C:60})
+    const id = 'a',
+          value = 5
+    triangle.update(id, value)
 
-    triangle.update(right)
     expect(triangle.sides).toEqual(
-      {a: right.a, b: right.b, c: right.c}
-    )
-    expect(triangle.angles).toEqual(
-      {A: right.A, B: right.B, C: right.C}
+      {a: 5, b: right.b, c: right.c}
     )
   })
-  
-  it('sides', ()=>{
+  it('change angle value', ()=>{
     const triangle = new Triangle({a:6, b:6, c:6, A:60,B:60, C:60})
+    const id = 'C',
+          value = 20
+    triangle.update(id, value)
 
-    triangle.update({a:right.a, b:right.b, c:right.c})
     expect(triangle.sides).toEqual(
-      {a: right.a, b: right.b, c: right.c}
-    )
-    expect(triangle.angles).toEqual(
-      {A: null, B: null, C: null}
+      {a: 5, b: right.b, c: 20}
     )
   })
-
-  it('mixed values', ()=>{
-    const triangle = new Triangle({a:6, b:6, c:6, A:60,B:60, C:60})
-    triangle.update({a:right.a, b:right.b, C:right.C})
-    expect(triangle.sides).toEqual(
-      {a: right.a, b: right.b, c: null}
-    )
-    expect(triangle.angles).toEqual(
-      {A: null, B: null, C: right.C}
-    )
-  })  
 })
 
 describe('Should solve triangles properly', ()=>{
