@@ -242,20 +242,14 @@ export default class Triangle {
     }
   }
   
-  update({a=null,b=null,c=null,A=null,B=null,C=null}: Constructor){
-    this.sides = {
-      a: a,
-      b: b,
-      c: c
+  update([idx, value]: [string, number]){
+
+    if (idx.toUpperCase() === idx) {
+      this.angles[idx] = value;
+    } else {
+      this.sides[idx] = value;
     }
-    this.angles = {
-      A: A,
-      B: B,
-      C: C
-    }
-    this.area = null
-    this.status = 'Three values need to be specified, including at least one side'
-    this.alt = null
+    this.validateInput();
   }
   draw (canvas: any){
     const ctx = canvas.getContext('2d')
