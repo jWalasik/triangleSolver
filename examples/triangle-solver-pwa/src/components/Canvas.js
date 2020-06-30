@@ -5,7 +5,7 @@ const Canvas = ({triangle}) => {
   React.useEffect(()=>{
     triangle.draw(canvasRef.current)
   })
-  console.log('canvas', Date.now())
+  
   return (
     <canvas 
       ref={canvasRef}

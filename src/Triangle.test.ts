@@ -142,19 +142,7 @@ describe('Should solve triangles properly', ()=>{
       const triangle = new Triangle({A:equilateral.A,b:equilateral.b,c:equilateral.c})
       triangle.solve()
       return compare(triangle, 'equilateral')
-    })
-    it('AAS case', ()=>{
-      const triangle = new Triangle({A:equilateral.A, b:equilateral.b, B:equilateral.B})
-      triangle.solve()
-      return compare(triangle, 'equilateral')
-    })
-    it('sSA case', ()=>{
-      const triangle = new Triangle({b:equilateral.b, c:equilateral.c, C:equilateral.C})
-      triangle.solve()
-      return compare(triangle, 'equilateral')
-    })
-    it('SsA case', ()=>{
-      const triangle = new Triangle({b:equilateral.b, c:equilateral.c, B:equilateral.B})
+      
       triangle.solve()
       return compare(triangle, 'equilateral')
     })

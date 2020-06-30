@@ -11,14 +11,16 @@ interface Alt {
 interface Constructor {
     [index: string]: number | null;
 }
+interface Validator {
+    [index: string]: number;
+}
 export default class Triangle {
     sides: Sides;
     angles: Angles;
+    validator: Validator;
     area: number | null;
     status: string;
     alt: Alt;
-    s: number;
-    A: number;
     constructor({ a, b, c, A, B, C }: Constructor);
     toRad(angle: number): number;
     toDeg(angle: number): number;

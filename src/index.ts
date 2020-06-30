@@ -273,6 +273,8 @@ export default class Triangle {
     const x = Math.sin(this.toRad(primC)) * ratio * factor
     var Bx=Cx-x, By=Cy-h
     
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     ctx.beginPath();
     ctx.moveTo(Ax, Ay);
     ctx.lineTo(Cx, Cy);

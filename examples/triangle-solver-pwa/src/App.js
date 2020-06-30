@@ -21,7 +21,7 @@ const App = () => {
     B: null,
     C: null
   })
-  
+  console.log(triangle)
   const handleValueChange = (e) => {
     setValues({
       ...values, 
