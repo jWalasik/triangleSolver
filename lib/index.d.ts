@@ -36,14 +36,8 @@ export default class Triangle {
     validateResults(): void;
     roundResults(): void;
     pickAlgorithm(): "SSS" | "AAS" | "ASA" | "SsA" | "sSA" | "SAS";
-    update({ a, b, c, A, B, C }: Constructor): void;
+    update(idx: string, value: number): void;
     draw(canvas: any): void;
-    solve(): string | {
-        angles: Angles;
-        sides: Sides;
-    } | {
-        angles: Angles;
-        sides: Sides;
-    }[];
+    solve(): Promise<unknown>;
 }
 export {};

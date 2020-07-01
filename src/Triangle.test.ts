@@ -86,7 +86,7 @@ describe('Should validate inputs: ', ()=> {
 
 describe('Should properly update values', ()=>{
   it('change side value', ()=>{
-    const triangle = new Triangle({a:6, b:6, c:6, A:60,B:60, C:60})
+    const triangle = new Triangle(right)
     const id = 'a',
           value = 5
     triangle.update(id, value)
@@ -96,33 +96,34 @@ describe('Should properly update values', ()=>{
     )
   })
   it('change angle value', ()=>{
-    const triangle = new Triangle({a:6, b:6, c:6, A:60,B:60, C:60})
+    const triangle = new Triangle(right)
     const id = 'C',
           value = 20
     triangle.update(id, value)
 
-    expect(triangle.sides).toEqual(
-      {a: 5, b: right.b, c: 20}
+    expect(triangle.angles).toEqual(
+      {A: right.A, B: right.B, C: 20}
     )
   })
 })
 
 describe('Should solve triangles properly', ()=>{
-  const compare = (triangle, type, alt) => {
+  const compare = (triangle: any, type: string) => {
     const expected = eval(type)
-    const closeTo = (expected, precision = 2) => ({
-      asymmetricMatch: (actual) => Math.abs(expected - actual) < Math.pow(10, -precision) / 2
+    
+    const closeTo = (expected:number , precision = 2) => ({
+      asymmetricMatch: (actual: number) => Math.abs(expected - actual) < 0.2
     });
     
     expect(triangle.sides).toMatchObject({
-      a: closeTo(expected.a,3),
-      b: closeTo(expected.b,3),
-      c: closeTo(expected.c,3)
+      a: closeTo(expected.a,1),
+      b: closeTo(expected.b,1),
+      c: closeTo(expected.c,1)
     })
     expect(triangle.angles).toMatchObject({
-      A: closeTo(expected.A,3),
-      B: closeTo(expected.B,3),
-      C: closeTo(expected.C,3)
+      A: closeTo(expected.A,1),
+      B: closeTo(expected.B,1),
+      C: closeTo(expected.C,1)
     })
   }
   
@@ -136,7 +137,19 @@ describe('Should solve triangles properly', ()=>{
       const triangle = new Triangle({A:equilateral.A,b:equilateral.b,c:equilateral.c})
       triangle.solve()
       return compare(triangle, 'equilateral')
-      
+    })
+    it('AAS case', ()=>{
+      const triangle = new Triangle({A:equilateral.A, b:equilateral.b, B:equilateral.B})
+      triangle.solve()
+      return compare(triangle, 'equilateral')
+    })
+    it('sSA case', ()=>{
+      const triangle = new Triangle({b:equilateral.b, c:equilateral.c, C:equilateral.C})
+      triangle.solve()
+      return compare(triangle, 'equilateral')
+    })
+    it('SsA case', ()=>{
+      const triangle = new Triangle({b:equilateral.b, c:equilateral.c, B:equilateral.B})
       triangle.solve()
       return compare(triangle, 'equilateral')
     })
@@ -172,11 +185,8 @@ describe('Should solve triangles properly', ()=>{
     it('sSA case', ()=>{
       const triangle = new Triangle({b:obtuse.b, c:obtuse.c, B:obtuse.B})
       triangle.solve()
-      if((triangle.validator.sides + triangle.validator.angles !== 6) && triangle.alt){
-        return compare(triangle, 'obtuse', true)
-      }
-      console.log('sSA',triangle.validator,triangle.sides, triangle.angles, triangle.alt)
-      return compare(triangle, 'obtuse')
+      //this triangle yields two solutions
+      return compare(triangle.alt, 'obtuse')
     })
     it('ASA case', ()=>{
       const triangle = new Triangle({A:obtuse.A, b:obtuse.b, C:obtuse.C})
@@ -204,9 +214,7 @@ describe('Should solve triangles properly', ()=>{
     it('sSA case', ()=>{
       const triangle = new Triangle({b:acute.b, c:acute.c, C:acute.C})
       triangle.solve()
-      if((triangle.validator.sides + triangle.validator.angles !== 6) && triangle.alt){
-        return compare(triangle, 'acute', true)
-      }
+      
       return compare(triangle, 'acute')
     })
     it('SsA case', ()=>{
@@ -240,9 +248,7 @@ describe('Should solve triangles properly', ()=>{
     it('sSA case', ()=>{
       const triangle = new Triangle({b:isoceles.b, c:isoceles.c, C:isoceles.C})
       triangle.solve()
-      if((triangle.validator.sides + triangle.validator.angles !== 6) && triangle.alt){
-        return compare(triangle, 'isoceles', true)
-      }
+      
       return compare(triangle, 'isoceles')
     })
     it('SsA case', ()=>{
@@ -276,9 +282,7 @@ describe('Should solve triangles properly', ()=>{
     it('sSA case', ()=>{
       const triangle = new Triangle({b:right.b, c:right.c, C:right.C})
       triangle.solve()
-      if((triangle.validator.sides + triangle.validator.angles !== 6) && triangle.alt){
-        return compare(triangle, 'right', true)
-      }
+      
       return compare(triangle, 'right')
     })
     it('SsA case', ()=>{

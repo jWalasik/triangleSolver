@@ -73,7 +73,7 @@ export default class Triangle {
       SAS: ()=>{
         //remove null values, store index
         const side = Object.values(this.sides).filter((x)=>!!x)        
-        let angle:any = Object.entries(this.angles).filter(x=>!!x[1]).flat()
+        let angle:any = Object.entries(this.angles).filter(x=>!!x[1])[0]
         
         //law of cosines to get missing side
         const missingSide = Math.sqrt(side[0]**2 + side[1]**2 - 2*side[0]*side[1]*Math.cos(this.toRad(<any>angle[1])))
@@ -84,7 +84,7 @@ export default class Triangle {
       AAS: ()=>{
         //find missing angle
         const missingAngle = Object.entries(this.angles).reduce((a, b)=>a-b[1], 180)
-        const side:any = Object.entries(this.sides).filter((x)=>!!x[1]).flat()
+        const side:any = Object.entries(this.sides).filter((x)=>!!x[1])[0]
         
         Object.entries(this.sides).forEach(entry=> {
           const key = entry[0].toUpperCase()
@@ -168,7 +168,7 @@ export default class Triangle {
         const missingAngle = Object.entries(this.angles).reduce((a, b)=>a-b[1], 180)
         
         //known side and its key
-        let [fixKey,fixSide] = Object.entries(this.sides).filter((x)=>!!x[1]).flat()
+        let [fixKey,fixSide] = Object.entries(this.sides).filter((x)=>!!x[1])[0]
         fixKey = fixKey.toString().toUpperCase()
         this.angles[fixKey] = missingAngle
         
@@ -242,7 +242,7 @@ export default class Triangle {
     }
   }
   
-  update([idx, value]: [string, number]){
+  update(idx:string, value:number){
     if (idx.toUpperCase() === idx) {
       this.angles[idx] = value;
     } else {
@@ -283,37 +283,26 @@ export default class Triangle {
     ctx.fillText(`B:${this.angles.B}`, Bx-20, By+40)
     ctx.fillText(`C:${this.angles.C}`, Cx-60, Cy-10)
     //sides
-    ctx.fillText(`a:${this.sides.a}`, height/6, height/2+10)
+    ctx.fillText(`a:${this.sides.a}`, height*0.8, height/2+10)
     ctx.fillText(`b:${this.sides.b}`, canvas.width/2, Ay-10)
-    ctx.fillText(`c:${this.sides.c}`, height*0.8, height/2+10)
+    ctx.fillText(`c:${this.sides.c}`, height/6, height/2+10)
   }
   solve(){
     this.validateInput()
-    if(this.status === 'Valid input'){
+    return new Promise((resolve, reject) => {
       //pick algorithm
       const alg = this.pickAlgorithm()
       //use algorithm
       this.algorithmMap[alg]()
       
       //validateResult
-      this.validateResults()
-      this.roundResults()
-      if(<string>this.status === 'Solved') {
-        return {
-          angles: this.angles,
-          sides: this.sides
-        }
-      } else if(<string>this.status === 'Two solutions possible') {
-        return [{
-          angles: this.angles,
-          sides: this.sides
-        },{
-          angles: this.alt.angles,
-          sides: this.alt.sides
-        }]
-      }
-      else return `Error: ${this.status}`
-    }
-    else return this.status
+      this.validateResults();
+      this.roundResults();
+      if (this.status === "Solved") {
+        resolve("Solved");
+      } else if (this.status === "Two solutions possible") {
+        resolve("Two solutions possible");
+      } else reject(this.status);
+    })
   }
 }
