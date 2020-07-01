@@ -108,16 +108,24 @@ describe('Should properly update values', ()=>{
 })
 
 describe('Should solve triangles properly', ()=>{
-  const compare = (triangle: Triangle, type: string, alt?: boolean) => {
+  const compare = (triangle, type, alt) => {
     const expected = eval(type)
-
-    expect(alt ? triangle.alt.sides.a : triangle.sides.a).toBeCloseTo(expected.a, 0)
-    expect(alt ? triangle.alt.sides.b : triangle.sides.b).toBeCloseTo(expected.b, 0)
-    expect(alt ? triangle.alt.sides.c : triangle.sides.c).toBeCloseTo(expected.c, 0)
-    expect(alt ? triangle.alt.angles.A : triangle.angles.A).toBeCloseTo(expected.A, 0)
-    expect(alt ? triangle.alt.angles.B : triangle.angles.B).toBeCloseTo(expected.B, 0)
-    expect(alt ? triangle.alt.angles.C : triangle.angles.C).toBeCloseTo(expected.C, 0)
+    const closeTo = (expected, precision = 2) => ({
+      asymmetricMatch: (actual) => Math.abs(expected - actual) < Math.pow(10, -precision) / 2
+    });
+    
+    expect(triangle.sides).toMatchObject({
+      a: closeTo(expected.a,3),
+      b: closeTo(expected.b,3),
+      c: closeTo(expected.c,3)
+    })
+    expect(triangle.angles).toMatchObject({
+      A: closeTo(expected.A,3),
+      B: closeTo(expected.B,3),
+      C: closeTo(expected.C,3)
+    })
   }
+  
   describe('Equilateral triangles:', ()=>{
     it('SSS case', ()=>{
       const triangle = new Triangle({a: equilateral.a, b:equilateral.b, c:equilateral.c})
