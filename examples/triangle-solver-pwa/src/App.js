@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import triangleSolver from 'triangle-solver'
+import TriangleSolver from 'triangle-solver'
 
 import Canvas from './components/Canvas'
 import Results from './components/Results'
@@ -10,30 +10,27 @@ const defaults = {
   a:5, b:5, c:5,
   A:60, B:60, C:60
 }
-const triangle = new triangleSolver(defaults)
+const triangle = new TriangleSolver(defaults)
 
 const App = () => {
-  const [values, setValues] = React.useState({
-    a: null,
-    b: null,
-    c: null,
-    A: null,
-    B: null,
-    C: null
-  })
-  console.log(triangle)
-  const handleValueChange = (e) => {
-    setValues({
-      ...values, 
-      [e.target.id]: e.target.value === '' ? null : e.target.value //prevent empty string from being passed
-    })
-  }
+  const [update, setUpdate] = React.useState(false);
+
+  React.useEffect(() => {
+    setUpdate(false);
+  }, [update]);
+
+  const handleValueChange = e => {
+    const { id, value } = e.target;
+    triangle.update(id, value);
+    triangle.validateInput();
+    setUpdate(true);
+  };
 
   const solveTriangle = () => {
-    triangle.update(values)
-    triangle.solve()
-    setValues({values}) //triggers rerender, bad hack, dont do this
-  }
+    triangle.solve().then(res => {
+      setUpdate(true);
+    });
+  };
 
   return (
     <div className="App">
@@ -46,7 +43,7 @@ const App = () => {
           <input 
             id='a'
             onChange={handleValueChange}
-            value={values.a}
+            value={triangle.sides.a}
             type="number"
             placeholder="length"
           />
@@ -57,7 +54,7 @@ const App = () => {
           <input 
             id='b'
             onChange={handleValueChange}
-            value={values.b}
+            value={triangle.sides.b}
             type="number"
             placeholder="length"
           />
@@ -68,7 +65,7 @@ const App = () => {
           <input 
             id='c'
             onChange={handleValueChange}
-            value={values.c}
+            value={triangle.sides.c}
             type="number"
             placeholder="length"
           />
@@ -79,7 +76,7 @@ const App = () => {
           <input 
             id='A'
             onChange={handleValueChange}
-            value={values.A}
+            value={triangle.angles.A}
             type="number"
             placeholder="angles in degree"
           />
@@ -90,7 +87,7 @@ const App = () => {
           <input
             id='B'
             onChange={handleValueChange}
-            value={values.B}
+            value={triangle.angles.B}
             type="number"
             placeholder="angle in degrees"
           />
@@ -101,7 +98,7 @@ const App = () => {
           <input
             id='C'
             onChange={handleValueChange}
-            value={values.C}
+            value={triangle.angles.C}
             type="number"
             placeholder="angle in degrees"
           />

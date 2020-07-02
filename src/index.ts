@@ -84,7 +84,7 @@ export default class Triangle {
       AAS: ()=>{
         //find missing angle
         const missingAngle = Object.entries(this.angles).reduce((a, b)=>a-b[1], 180)
-        const side:any = Object.entries(this.sides).filter((x)=>!!x[1])[0]
+        const side:any = Object.entries(this.sides).filter((x)=>!!x[1]).flat()
         
         Object.entries(this.sides).forEach(entry=> {
           const key = entry[0].toUpperCase()
@@ -183,6 +183,11 @@ export default class Triangle {
   }
 
   validateInput(){
+    this.validator = {
+      sides: (+!!this.sides.a) + (+!!this.sides.b) + (+!!this.sides.c),
+      angles: (+!!this.angles.A) + (+!!this.angles.B) + (+!!this.angles.C)
+    }
+
     if(this.validator.sides === 0) this.status = 'You need to provide at least one side'
     else if(this.validator.sides + this.validator.angles !== 3) this.status = 'You need to provide exactly three values'
     else this.status = 'Valid input'
@@ -241,12 +246,12 @@ export default class Triangle {
       return 'SAS'
     }
   }
-  
-  update(idx:string, value:number){
+ 
+  update(idx:string, value: any){
     if (idx.toUpperCase() === idx) {
-      this.angles[idx] = value;
+      this.angles[idx] = value ? parseInt(value) : null;
     } else {
-      this.sides[idx] = value;
+      this.sides[idx] = value ? parseInt(value) : null;
     }
     this.validateInput();
   }
