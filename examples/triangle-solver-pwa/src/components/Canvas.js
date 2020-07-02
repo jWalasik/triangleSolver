@@ -8,6 +8,7 @@ const Canvas = ({triangle}) => {
   
   return (
     <canvas 
+      className="canvas"
       ref={canvasRef}
       width={300}
       height={300}

@@ -8824,9 +8824,9 @@ tr46@^1.0.1:
   dependencies:
     punycode "^2.1.0"
 
-triangle-solver@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/triangle-solver/-/triangle-solver-1.0.7.tgz#d482f29b069820f56acda55a4046707203299772"
+triangle-solver@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/triangle-solver/-/triangle-solver-1.0.8.tgz#6f004c108241eed4d4350360bf1a06a1470671e6"
 
 ts-pnp@1.1.6:
   version "1.1.6"

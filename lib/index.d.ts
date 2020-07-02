@@ -36,7 +36,7 @@ export default class Triangle {
     validateResults(): void;
     roundResults(): void;
     pickAlgorithm(): "SSS" | "AAS" | "ASA" | "SsA" | "sSA" | "SAS";
-    update(idx: string, value: number): void;
+    update(idx: string, value: any): void;
     draw(canvas: any): void;
     solve(): Promise<unknown>;
 }

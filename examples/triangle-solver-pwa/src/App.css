@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+
+.result-table {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 600px;
+  margin: auto;
+}
+
+h2 {
+  flex-grow: 1;
+  width: 600px;
+}
+.canvas {
+  margin: 20px;
+}
+
+.inputs{
+  display: flex;
+  justify-content: space-around;
+}
