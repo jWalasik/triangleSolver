@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  max-width: 450px;
+  margin: auto;
 }
 
 .App-logo {
@@ -42,19 +44,33 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-  max-width: 600px;
   margin: auto;
 }
 
 h2 {
   flex-grow: 1;
-  width: 600px;
+  margin: auto;
+  width: 100%;
 }
 .canvas {
-  margin: 20px;
 }
 
-.inputs{
+.inputs {
   display: flex;
   justify-content: space-around;
+  margin: auto;
+  padding: 5px;
+}
+.input-field__label {
+
+}
+
+.input-field__input {
+  width: 100px;
+  margin:5px;
+}
+
+.button-solve {
+  width: 70%;
+  margin: auto;
 }

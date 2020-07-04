@@ -1,10 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import TriangleSolver from 'triangle-solver'
+import TriangleSolver from 'triangle-solver';
 
-import Canvas from './components/Canvas'
-import Results from './components/Results'
+import Canvas from './components/Canvas';
+import Inputs from './components/Inputs';
 
 const defaults = {
   a:5, b:5, c:5,
@@ -27,9 +26,9 @@ const App = () => {
   };
 
   const solveTriangle = () => {
-    triangle.solve().then(res => {
-      setUpdate(true);
-    });
+    triangle.solve()
+      .then(()=>setUpdate(true))
+      .catch(err=>alert(err))
   };
 
   return (
@@ -38,86 +37,12 @@ const App = () => {
 
       <div className="display">
         <h2>{triangle.status}</h2>
-
-        <div className="inputs">
-          <div className="inputs--sides">
-            <div className="input-field side-a">
-              <label>a</label>
-              <input 
-                id='a'
-                onChange={handleValueChange}
-                value={triangle.sides.a}
-                type="number"
-                placeholder="length"
-              />
-            </div>
-
-            <div className="input-field side-b">
-              <label>b</label>
-              <input 
-                id='b'
-                onChange={handleValueChange}
-                value={triangle.sides.b}
-                type="number"
-                placeholder="length"
-              />
-            </div>
-
-            <div className="input-field side-c">
-              <label>c</label>
-              <input 
-                id='c'
-                onChange={handleValueChange}
-                value={triangle.sides.c}
-                type="number"
-                placeholder="length"
-              />
-            </div>
-          </div>
-
-          <div className="inputs--angles">
-            <div className="input-field angle-A">
-              <label>A</label>
-              <input 
-                id='A'
-                onChange={handleValueChange}
-                value={triangle.angles.A}
-                type="number"
-                placeholder="angles in degree"
-              />
-            </div>
-
-            <div className="input-field angle-B">
-              <label>B</label>
-              <input
-                id='B'
-                onChange={handleValueChange}
-                value={triangle.angles.B}
-                type="number"
-                placeholder="angle in degrees"
-              />
-            </div>
-
-            <div className="input-field angle-C">
-              <label>C</label>
-              <input
-                id='C'
-                onChange={handleValueChange}
-                value={triangle.angles.C}
-                type="number"
-                placeholder="angle in degrees"
-              />
-            </div>
-          </div>
-        </div>
-             
-
+        
         <Canvas triangle={triangle} />
+        <Inputs triangle={triangle} handleValueChange={handleValueChange} />
       </div>
 
-      <Results triangle={triangle} />
-
-      <button onClick={solveTriangle}>SOLVE</button>
+      <button className="button-solve" onClick={solveTriangle}>SOLVE</button>
     </div>
   );
 }
