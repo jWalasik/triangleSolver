@@ -1,0 +1,3 @@
+[submodule "examples/examples/triangle-solver-react-native"]
+	path = examples/examples/triangle-solver-react-native
+	url = git@github.com:elPaleniozord/triangleSolver.git
