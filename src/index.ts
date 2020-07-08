@@ -247,7 +247,7 @@ export default class Triangle {
     }
   }
  
-  update(idx:string, value: any){
+  update (idx:string, value: any){
     if (idx.toUpperCase() === idx) {
       this.angles[idx] = value ? parseInt(value) : null;
     } else {
@@ -255,25 +255,53 @@ export default class Triangle {
     }
     this.validateInput();
   }
-  draw (canvas: any){
-    const ctx = canvas.getContext('2d')
-    const height = canvas.height
-    const factor = height / this.sides[Object.keys(this.sides).sort((a,b)=>this.sides[b]-this.sides[a])[0]]
-
-    var Ax=0, Ay=height;
-    var Cx = this.sides.b*factor, Cy = Ay      
-
+  //inverted scale adheres to canvas coordinate system
+  getCoordinates (size: number, inverted?: boolean){
+    let Ax,Ay,Bx,By,Cx,Cy
+  
+    //start from 0,0
+    Ax=0
+    Ay=0
+    //A-C pararell to x-axis
+    Cx=Ax+this.sides.b
+    Cy=Ay
+    //constructs right triangle adjacent to side a, which serves as vector components
     const primC = 90 - this.angles.C
-    const primB = 180 - 90 - primC
-    
+    const primB = 180 - 90 - primC    
     const ratio = this.sides.a / Math.sin(this.toRad(90))
-    const h = Math.sin(this.toRad(primB)) * ratio * factor
-    const x = Math.sin(this.toRad(primC)) * ratio * factor
-    var Bx=Cx-x, By=Cy-h
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const h = Math.sin(this.toRad(primB)) * ratio
+    const x = Math.sin(this.toRad(primC)) * ratio
+    Bx=Cx-x, By=Cy+h
 
+    const coords = {Ax,Ay,Bx,By,Cx,Cy}
+
+    const min = Math.min.apply(Math, Object.values(coords)),
+          max = Math.max.apply(Math, Object.values(coords))
+    
+    const rescaled = Object.entries(coords).map((x)=>{
+      return [x[0], size*0.95 * (x[1]-min)/(max-min)]
+    })
+    
+    return {
+      Ax: <number>rescaled[0][1],
+      Ay: inverted ? size - <number>rescaled[1][1] : <number>rescaled[1][1],
+      Bx: <number>rescaled[2][1],
+      By: inverted ? size - <number>rescaled[3][1] : <number>rescaled[3][1],
+      Cx: <number>rescaled[4][1],
+      Cy: inverted ? size - <number>rescaled[5][1] : <number>rescaled[5][1]
+    }
+  }
+
+  draw (canvas: any){
+    const size = canvas.height
+
+    const {Ax,Ay,Bx,By,Cx,Cy} = this.getCoordinates(size, true)
+    
+    const ctx = canvas.getContext('2d')
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
     ctx.beginPath();
+    
     ctx.moveTo(Ax, Ay);
     ctx.lineTo(Cx, Cy);
     ctx.lineTo(Bx, By);
@@ -281,16 +309,26 @@ export default class Triangle {
     ctx.fillStyle="white"; ctx.lineWidth=2;
     ctx.stroke()
 
+    //ADD LABELS
     //angles
     ctx.font = "16px Arial black"
     ctx.fillStyle="black"
-    ctx.fillText(`A:${this.angles.A}`, Ax+20, Ay-10)
-    ctx.fillText(`B:${this.angles.B}`, Bx-20, By+40)
-    ctx.fillText(`C:${this.angles.C}`, Cx-60, Cy-10)
+    ctx.fillText(`A:${this.angles.A}`, Ax+20, Ay-15)
+    ctx.fillText(`B:${this.angles.B}`, Bx-20, By+50)
+    ctx.fillText(`C:${this.angles.C}`, Cx-60, Cy-15)
     //sides
-    ctx.fillText(`a:${this.sides.a}`, height*0.8, height/2+10)
-    ctx.fillText(`b:${this.sides.b}`, canvas.width/2, Ay-10)
-    ctx.fillText(`c:${this.sides.c}`, height/6, height/2+10)
+    ctx.fillText(`a:${this.sides.a}`, (Bx+Cx)/2 + 15, (By+Ay)/2)
+    ctx.fillText(`b:${this.sides.b}`, (Cx-Ax)/2, Ay-15)
+    ctx.fillText(`c:${this.sides.c}`, (Bx+Ax)/2 - 40, (By+Ay)/2)
+    //arcs
+    ctx.beginPath();
+    ctx.strokeStyle = '#ff0000'
+    ctx.arc(Ax, Ay, 75, this.toRad(360-this.angles.A), 0);
+    ctx.moveTo(Bx,By)
+    ctx.arc(Bx,By, 75, this.toRad(this.angles.B+this.angles.C), this.toRad(this.angles.C), true);
+    ctx.moveTo(Cx,Cy)
+    ctx.arc(Cx,Cy, 75, this.toRad(180), this.toRad(this.angles.C-180), false);
+    ctx.stroke()
   }
   solve(){
     this.validateInput()
