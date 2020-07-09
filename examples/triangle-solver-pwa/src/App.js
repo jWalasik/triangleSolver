@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import TriangleSolver from 'triangle-solver';
+import TriangleSolver from 'triangle-solver'; //import from package
 
 import Canvas from './components/Canvas';
 import Inputs from './components/Inputs';
@@ -33,7 +33,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>triangleSolver</h1>
+      <h1 className="title">triangleSolver</h1>
 
       <div className="display">
         <h2>{triangle.status}</h2>
