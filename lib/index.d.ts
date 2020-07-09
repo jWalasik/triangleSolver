@@ -37,6 +37,14 @@ export default class Triangle {
     roundResults(): void;
     pickAlgorithm(): "SSS" | "AAS" | "ASA" | "SsA" | "sSA" | "SAS";
     update(idx: string, value: any): void;
+    getCoordinates(size: number, inverted?: boolean): {
+        Ax: number;
+        Ay: number;
+        Bx: number;
+        By: number;
+        Cx: number;
+        Cy: number;
+    };
     draw(canvas: any): void;
     solve(): Promise<unknown>;
 }

@@ -292,27 +292,26 @@ export default class Triangle {
     }
   }
 
-  draw (canvas: any){
+  draw (canvas: any, color: string){
     const size = canvas.height
-
     const {Ax,Ay,Bx,By,Cx,Cy} = this.getCoordinates(size, true)
     
     const ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.beginPath();
-    
+    ctx.strokeStyle = color; 
+    ctx.lineWidth=1.5;
+    ctx.beginPath();    
     ctx.moveTo(Ax, Ay);
     ctx.lineTo(Cx, Cy);
     ctx.lineTo(Bx, By);
     ctx.closePath();
-    ctx.fillStyle="white"; ctx.lineWidth=2;
+     
     ctx.stroke()
 
     //ADD LABELS
     //angles
-    ctx.font = "16px Arial black"
-    ctx.fillStyle="black"
+    ctx.font = "16px Arial"
+    ctx.fillStyle=color
     ctx.fillText(`A:${this.angles.A}`, Ax+20, Ay-15)
     ctx.fillText(`B:${this.angles.B}`, Bx-20, By+50)
     ctx.fillText(`C:${this.angles.C}`, Cx-60, Cy-15)
@@ -322,12 +321,11 @@ export default class Triangle {
     ctx.fillText(`c:${this.sides.c}`, (Bx+Ax)/2 - 40, (By+Ay)/2)
     //arcs
     ctx.beginPath();
-    ctx.strokeStyle = '#ff0000'
-    ctx.arc(Ax, Ay, 75, this.toRad(360-this.angles.A), 0);
+    ctx.arc(Ax, Ay, size*0.06, this.toRad(360-this.angles.A), 0);
     ctx.moveTo(Bx,By)
-    ctx.arc(Bx,By, 75, this.toRad(this.angles.B+this.angles.C), this.toRad(this.angles.C), true);
+    ctx.arc(Bx,By, size*0.06, this.toRad(this.angles.B+this.angles.C), this.toRad(this.angles.C), true);
     ctx.moveTo(Cx,Cy)
-    ctx.arc(Cx,Cy, 75, this.toRad(180), this.toRad(this.angles.C-180), false);
+    ctx.arc(Cx,Cy, size*0.06, this.toRad(180), this.toRad(this.angles.C-180), false);
     ctx.stroke()
   }
   solve(){
