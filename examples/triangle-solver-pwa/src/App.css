@@ -1,42 +1,23 @@
+@font-face {
+  font-family: 'DkCrayonCrumble';
+  src: local('DkCrayonCrumble'), url(./DkCrayonCrumble-ddll.ttf) format('truetype')
+}
+body {
+  background: rgb(48, 47, 47)
+}
+.title {
+  font-weight: 200;
+}
 .App {
   text-align: center;
+  height: 100%;
   max-width: 450px;
-  margin: auto;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin: auto;
+  background-image: url('/blackboard.png');
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  font-family: 'DkCrayonCrumble';
+  font-size: 20px;
 }
 
 .result-table {
@@ -51,6 +32,10 @@ h2 {
   flex-grow: 1;
   margin: auto;
   width: 100%;
+  font-weight: 100;
+}
+h3 {
+  font-weight: 100;
 }
 .canvas {
   
@@ -69,9 +54,28 @@ h2 {
 .input-field__input {
   width: 100px;
   margin:5px;
+  background-color: transparent;
+  border: none;
+  border-bottom: solid 1px white;
+  color: white;
+  text-align: end;
+  font-family: 'DkCrayonCrumble';
+  font-size: 20px;
 }
 
 .button-solve {
-  width: 70%;
+  width: 100%;
+  max-width: 250px;
   margin: auto;
+  padding: 5px;
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 10px;
+  font-family: 'DkCrayonCrumble';
+  font-size: 20px;
+  margin: 20px;
+}
+.button-solve:hover {
+  background-color: rgba(0,0,0,0.5);
 }

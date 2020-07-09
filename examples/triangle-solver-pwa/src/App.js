@@ -33,7 +33,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>triangleSolver</h1>
+      <h1 className="title">triangleSolver</h1>
 
       <div className="display">
         <h2>{triangle.status}</h2>
