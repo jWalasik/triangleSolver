@@ -45,7 +45,7 @@ export default class Triangle {
         Cx: number;
         Cy: number;
     };
-    draw(canvas: any): void;
+    draw(canvas: any, color: string): void;
     solve(): Promise<unknown>;
 }
 export {};
