@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import TriangleSolver from 'triangle-solver'; //import from package
+import TriangleSolver from 'triangle-solver';
 
 import Canvas from './components/Canvas';
 import Inputs from './components/Inputs';

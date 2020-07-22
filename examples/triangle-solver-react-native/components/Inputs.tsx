@@ -1,16 +1,21 @@
 import React from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView } from 'react-native';
 
 const Inputs = ({triangle, handleValueChange}) => {
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+      style={styles.container}
+      behavior='padding'
+      >
       <View style={styles.inputsWrapper}>
         <Text style={styles.header3}>Sides</Text>
 
         <View style={styles.inputField}>
           <Text style={styles.label}>a</Text>
           <TextInput 
-            onChange={num=>handleValueChange('a', num)}
+            onChange={num=>{
+              console.log(num)
+              handleValueChange('a', num)}}
             keyboardType='numeric'
             value={triangle.sides.a}
             style={styles.input}
@@ -72,7 +77,7 @@ const Inputs = ({triangle, handleValueChange}) => {
         </View>
 
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -80,26 +85,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
+    width: '90%',
+    justifyContent: 'space-around'
   },
-  inputsWrapper: {    
+  inputsWrapper: {
   },
   header3: {
     fontSize: 16,
-    margin: 5
+    margin: 5,
+    color: 'white'
   },
   inputField: {
     flexDirection: "row",
     margin: 5,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 3
+    borderBottomColor: 'white',
+    borderBottomWidth: 1,
+    padding: 3,
+    width: 100
   },
   label: {
-
+    color: 'white'
   },
   input: {
-    textAlign: "right"
+    textAlign: "right",
+    color: 'white',
+    flex: 1
   }
 });
 
