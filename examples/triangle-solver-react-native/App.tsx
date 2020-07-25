@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, ImageBackground, ActivityIndicator } from 'react-native';
+import * as Font from 'expo-font'
 import TriangleSolver from 'triangle-solver';
 import TriangleCanvas from './components/TriangleCanvas';
 import Inputs from './components/Inputs';
@@ -12,14 +13,18 @@ const defaults = {
 const triangle = new TriangleSolver(defaults)
 
 export default function App() {
+  const [loaded, error] = Font.useFonts({
+    DkCrayon: require('./assets/DkCrayonCrumble-ddll.ttf')
+  }) 
+
   const [update, setUpdate] = React.useState(false);
 
   React.useEffect(() => {
     setUpdate(false);
+    
   }, [update]);
 
-  const handleValueChange = e => {
-    const { id, value } = e.target;
+  const handleValueChange = (id: string, value: number) => {
     triangle.update(id, value);
     triangle.validateInput();
     setUpdate(true);
@@ -33,17 +38,19 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header1}>triangleSolver</Text>
+      <ImageBackground source={require('./assets/blackboard.png')} style={styles.background}>
+        <Text style={styles.header1}>triangleSolver</Text>
+        <Text style={styles.status}>{triangle.status}</Text>
+        <TriangleCanvas triangle={triangle} />
+        <Inputs triangle={triangle} handleValueChange={handleValueChange} />
 
-      <TriangleCanvas triangle={triangle} />
-      <Inputs triangle={triangle} handleValueChange={handleValueChange} />
-
-      <Button 
-        onPress={solveTriangle}
-        title="Solve"
-        color="black"
-        accessibilityLabel="Compute unknown sides and angles of triangle"
-      />
+        <Button 
+          onPress={solveTriangle}
+          title="Solve"
+          color="gray"
+          accessibilityLabel="Compute unknown sides and angles of triangle"
+        />
+      </ImageBackground> 
     </View>
   );
 }
@@ -51,11 +58,25 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#fff'
+  },
+  background: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    marginTop: 20,
+    padding: 5
   },
   header1: {
-    fontSize: 20
+    color: 'white',
+    fontSize: 35,
+    fontFamily: 'DkCrayon',
+    alignSelf: 'center'
+  },
+  status: {
+    fontFamily: 'DkCrayon',
+    color: 'white',
+    fontSize: 26,
+    textAlign: 'center'
   }
 });

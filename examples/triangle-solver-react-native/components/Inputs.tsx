@@ -10,7 +10,7 @@ const Inputs = ({triangle, handleValueChange}) => {
         <View style={styles.inputField}>
           <Text style={styles.label}>a</Text>
           <TextInput 
-            onChange={num=>handleValueChange('a', num)}
+            onChangeText={num=>handleValueChange('a', num)}
             keyboardType='numeric'
             value={triangle.sides.a}
             style={styles.input}
@@ -20,7 +20,7 @@ const Inputs = ({triangle, handleValueChange}) => {
         <View style={styles.inputField}>
           <Text style={styles.label}>b</Text>
           <TextInput 
-            onChange={num=>handleValueChange('b', num)}
+            onChangeText={num=>handleValueChange('b', num)}
             keyboardType='numeric'
             value={triangle.sides.b}
             style={styles.input}
@@ -30,7 +30,7 @@ const Inputs = ({triangle, handleValueChange}) => {
         <View style={styles.inputField}>
           <Text style={styles.label}>c</Text>
           <TextInput 
-            onChange={num=>handleValueChange('c', num)}
+            onChangeText={num=>handleValueChange('c', num)}
             keyboardType='numeric'
             value={triangle.sides.c}
             style={styles.input}
@@ -44,7 +44,7 @@ const Inputs = ({triangle, handleValueChange}) => {
         <View style={styles.inputField}>
           <Text style={styles.label}>A</Text>
           <TextInput 
-            onChange={num=>handleValueChange('A', num)}
+            onChangeText={num=>handleValueChange('A', num)}
             keyboardType='numeric'
             value={triangle.angles.A}
             style={styles.input}
@@ -54,7 +54,7 @@ const Inputs = ({triangle, handleValueChange}) => {
         <View style={styles.inputField}>
           <Text style={styles.label}>B</Text>
           <TextInput 
-            onChange={num=>handleValueChange('B', num)}
+            onChangeText={num=>handleValueChange('B', num)}
             keyboardType='numeric'
             value={triangle.angles.B}
             style={styles.input}
@@ -64,7 +64,7 @@ const Inputs = ({triangle, handleValueChange}) => {
         <View style={styles.inputField}>
           <Text style={styles.label}>C</Text>
           <TextInput 
-            onChange={num=>handleValueChange('C', num)}
+            onChangeText={num=>handleValueChange('C', num)}
             keyboardType='numeric'
             value={triangle.angles.C}
             style={styles.input}
@@ -80,26 +80,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-around'
   },
-  inputsWrapper: {    
+  inputsWrapper: {
+    flex: 1,
   },
   header3: {
-    fontSize: 16,
-    margin: 5
+    fontFamily: 'DkCrayon',
+    fontSize: 26,
+    margin: 5,
+    color: 'white',
+    alignSelf: 'center'
   },
   inputField: {
     flexDirection: "row",
+    justifyContent: 'space-between',    
     margin: 5,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 3
+    padding: 3,
+    maxWidth: 125
   },
   label: {
-
+    fontFamily: 'DkCrayon',
+    color: 'white',
+    fontSize: 20,
+    margin: 2,
   },
   input: {
-    textAlign: "right"
+    fontSize: 20,
+    fontFamily: 'DkCrayon',
+    textAlign: "right",
+    color: 'white',
+    borderBottomColor: 'white',
+    borderBottomWidth: 1,
+    paddingRight: 10,
+    width: '100%'
   }
 });
 
