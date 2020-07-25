@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button, ImageBackground, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, Button, ImageBackground, ActivityIndicator } from 'react-native';
 import * as Font from 'expo-font'
 import TriangleSolver from 'triangle-solver';
 import TriangleCanvas from './components/TriangleCanvas';
@@ -13,12 +13,10 @@ const defaults = {
 const triangle = new TriangleSolver(defaults)
 
 export default function App() {
+  const [update, setUpdate] = React.useState(false);
   const [loaded, error] = Font.useFonts({
     DkCrayon: require('./assets/DkCrayonCrumble-ddll.ttf')
-  }) 
-
-  const [update, setUpdate] = React.useState(false);
-
+  })
   React.useEffect(() => {
     setUpdate(false);
     
@@ -35,9 +33,9 @@ export default function App() {
       .then(()=>setUpdate(true))
       .catch(err=>alert(err))
   };
-
+  if(!loaded) return <ActivityIndicator />
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <ImageBackground source={require('./assets/blackboard.png')} style={styles.background}>
         <Text style={styles.header1}>triangleSolver</Text>
         <Text style={styles.status}>{triangle.status}</Text>
@@ -51,7 +49,7 @@ export default function App() {
           accessibilityLabel="Compute unknown sides and angles of triangle"
         />
       </ImageBackground> 
-    </View>
+    </ScrollView>
   );
 }
 

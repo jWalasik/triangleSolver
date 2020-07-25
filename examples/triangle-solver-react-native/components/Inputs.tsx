@@ -10,7 +10,10 @@ const Inputs = ({triangle, handleValueChange}) => {
         <View style={styles.inputField}>
           <Text style={styles.label}>a</Text>
           <TextInput 
-            onChangeText={num=>handleValueChange('a', num)}
+            onChangeText={num=>{
+              console.log(num)
+              handleValueChange('a', num)}
+            }
             keyboardType='numeric'
             value={triangle.sides.a}
             style={styles.input}

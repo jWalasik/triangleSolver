@@ -5267,10 +5267,10 @@ toidentifier@1.0.0:
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
-triangle-solver@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/triangle-solver/-/triangle-solver-1.0.8.tgz#6f004c108241eed4d4350360bf1a06a1470671e6"
-  integrity sha512-XluCEj1f5NL6HWwuR8SbmR5pnmK9pff3uR+I9kJFk0mFPfKCdmf9sxSTUQvSTuyL4ictpk/3v+5ds83iVLRMpw==
+triangle-solver@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/triangle-solver/-/triangle-solver-1.1.1.tgz#8b33759cc3d073659034b80ef110627442a85d82"
+  integrity sha512-M8X9YP8jlUQ6I85tS6T+pcZEwVRSk2jfyVY1mKRQX2x8AhiJtqkv0a6d/w4944xJNrPB2TwKglxVcx4A8YiCdw==
 
 type-fest@^0.7.1:
   version "0.7.1"
