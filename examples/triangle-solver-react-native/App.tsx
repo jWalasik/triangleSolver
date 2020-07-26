@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Button, Image, ImageBackground } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, Button, ImageBackground, ActivityIndicator } from 'react-native';
+import * as Font from 'expo-font'
 import TriangleSolver from 'triangle-solver';
 import TriangleCanvas from './components/TriangleCanvas';
 import Inputs from './components/Inputs';
@@ -12,12 +13,16 @@ const triangle = new TriangleSolver(defaults)
 
 export default function App() {
   const [update, setUpdate] = React.useState(false);
-
+  const [loaded, error] = Font.useFonts({
+    DkCrayon: require('./assets/DkCrayonCrumble-ddll.ttf')
+  })
   React.useEffect(() => {
     setUpdate(false);
+    
   }, [update]);
 
-  const handleValueChange = (id: string, value: number) => {
+  const handleValueChange = (id: string, value=null) => {
+    console.log('value',value)
     triangle.update(id, value);
     triangle.validateInput();
     setUpdate(true);
@@ -28,54 +33,48 @@ export default function App() {
       .then(()=>setUpdate(true))
       .catch(err=>alert(err))
   };
-
+  if(!loaded) return <ActivityIndicator />
   return (
-    <ImageBackground source={require('./assets/blackboard.png')} style={styles.container} >
-        <ScrollView >
+    <ScrollView style={styles.container}>
+      <ImageBackground source={require('./assets/blackboard.png')} style={styles.background}>
         <Text style={styles.header1}>triangleSolver</Text>
         <Text style={styles.status}>{triangle.status}</Text>
-
         <TriangleCanvas triangle={triangle} />
         <Inputs triangle={triangle} handleValueChange={handleValueChange} />
 
-        <View style={styles.button}>
-          <Button 
-            onPress={solveTriangle}
-            title="Solve"
-            color="black"
-            accessibilityLabel="Compute unknown sides and angles of triangle"
-          />
-        </View>
-      </ScrollView>
-    </ImageBackground>    
+        <Button 
+          onPress={solveTriangle}
+          title="Solve"
+          color="gray"
+          accessibilityLabel="Compute unknown sides and angles of triangle"
+        />
+      </ImageBackground> 
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgb(48, 47, 47)',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    backgroundColor: '#fff'
+  },
+  background: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    marginTop: 20,
+    padding: 5
   },
   header1: {
-    marginTop: 30,
-    fontSize: 30,
-    color: 'white'
+    color: 'white',
+    fontSize: 35,
+    fontFamily: 'DkCrayon',
+    alignSelf: 'center'
   },
   status: {
-    textAlign: 'center',
-    fontSize: 15,
-    color: 'white'
-  },
-  button: {
-    // width: '100%',
-    // maxWidth: 250,
-    // padding: 5,
-    // backgroundColor: 'transparent',
-    // borderRadius: 10,
-    // fontSize: 20,
-    // margin: 20,
-    // color: 'white'
+    fontFamily: 'DkCrayon',
+    color: 'white',
+    fontSize: 26,
+    textAlign: 'center'
   }
 });
