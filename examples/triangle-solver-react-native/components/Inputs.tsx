@@ -15,7 +15,7 @@ const Inputs = ({triangle, handleValueChange}) => {
           <TextInput 
             onChangeText={num=>handleValueChange('a', num)}
             keyboardType='numeric'
-            value={triangle.sides.a}
+            value={triangle.sides.a ? String(triangle.sides.a) : ''}
             style={styles.input}
           />
         </View>
@@ -25,7 +25,7 @@ const Inputs = ({triangle, handleValueChange}) => {
           <TextInput 
             onChangeText={num=>handleValueChange('b', num)}
             keyboardType='numeric'
-            value={triangle.sides.b}
+            value={triangle.sides.b ? String(triangle.sides.b) : ''}
             style={styles.input}
           />
         </View>
@@ -33,10 +33,9 @@ const Inputs = ({triangle, handleValueChange}) => {
         <View style={styles.inputField}>
           <Text style={styles.label}>c</Text>
           <TextInput 
-            defaultValue='length'
             onChangeText={num=>handleValueChange('c', num)}
             keyboardType='numeric'
-            value={triangle.sides.c}
+            value={triangle.sides.c ? String(triangle.sides.c) : ''}
             style={styles.input}
           />
         </View>
@@ -50,7 +49,7 @@ const Inputs = ({triangle, handleValueChange}) => {
           <TextInput 
             onChangeText={num=>handleValueChange('A', num)}
             keyboardType='numeric'
-            value={triangle.angles.A}
+            value={triangle.angles.A ? String(triangle.angles.A) : ''}
             style={styles.input}
           />
         </View>
@@ -60,7 +59,7 @@ const Inputs = ({triangle, handleValueChange}) => {
           <TextInput 
             onChangeText={num=>handleValueChange('B', num)}
             keyboardType='numeric'
-            value={triangle.angles.B}
+            value={triangle.angles.B ? String(triangle.angles.B) : ''}
             style={styles.input}
           />
         </View>
@@ -70,7 +69,7 @@ const Inputs = ({triangle, handleValueChange}) => {
           <TextInput 
             onChangeText={num=>handleValueChange('C', num)}
             keyboardType='numeric'
-            value={triangle.angles.C}
+            value={triangle.angles.C ? String(triangle.angles.C) : ''}
             style={styles.input}
           />
         </View>

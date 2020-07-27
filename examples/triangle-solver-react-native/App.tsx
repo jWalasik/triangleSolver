@@ -22,7 +22,6 @@ export default function App() {
   }, [update]);
 
   const handleValueChange = (id: string, value=null) => {
-    console.log('value',value)
     triangle.update(id, value);
     triangle.validateInput();
     setUpdate(true);
