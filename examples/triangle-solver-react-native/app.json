@@ -21,6 +21,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "com.jwalasik.trianglesolver",
+      "versionCode": 1.0
     }
   }
 }
